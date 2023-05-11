@@ -39,6 +39,8 @@ class CalendarDatePicker2Config {
     this.weekdayLabelTextStyle,
     this.firstDayOfWeek,
     this.controlsHeight,
+    this.weekdaysHeight,
+    this.dynamicRows,
     this.lastMonthIcon,
     this.nextMonthIcon,
     this.controlsTextStyle,
@@ -56,9 +58,11 @@ class CalendarDatePicker2Config {
     this.dayTextStylePredicate,
     this.dayBuilder,
     this.yearBuilder,
+    this.cupertinoYearPicker,
     this.disableModePicker,
     this.centerAlignModePicker,
     this.customModePickerIcon,
+    this.modePickerFinalRotation,
     this.modePickerTextHandler,
     this.selectedRangeDayTextStyle,
   })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
@@ -99,6 +103,12 @@ class CalendarDatePicker2Config {
 
   /// Custom height for calendar control toggle's height
   final double? controlsHeight;
+
+  /// Custom height for calendar weekdays header's height
+  final double? weekdaysHeight;
+
+  /// Flag to enable dynamic row count resulting in varied day spacing
+  final bool? dynamicRows;
 
   /// Custom icon for last month button control
   final Widget? lastMonthIcon;
@@ -155,6 +165,9 @@ class CalendarDatePicker2Config {
   /// Function to provide full control over year widget UI
   final CalendarYearBuilder? yearBuilder;
 
+  /// Flag to change month/year picker to Cupertino one
+  final bool? cupertinoYearPicker;
+
   /// Flag to disable mode picker and hide the mode toggle button icon
   final bool? disableModePicker;
 
@@ -163,6 +176,9 @@ class CalendarDatePicker2Config {
 
   /// Custom icon for the mode picker button icon
   final Widget? customModePickerIcon;
+
+  /// Custom final position of the mode picker icon as Tween end parameter
+  final double? modePickerFinalRotation;
 
   /// Function to control mode picker displayed text
   final CalendarModePickerTextHandler? modePickerTextHandler;
@@ -177,6 +193,8 @@ class CalendarDatePicker2Config {
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
     double? controlsHeight,
+    double? weekdaysHeight,
+    bool? dynamicRows,
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
@@ -195,9 +213,11 @@ class CalendarDatePicker2Config {
     CalendarDayTextStylePredicate? dayTextStylePredicate,
     CalendarDayBuilder? dayBuilder,
     CalendarYearBuilder? yearBuilder,
+    bool? cupertinoYearPicker,
     bool? disableModePicker,
     bool? centerAlignModePicker,
     Widget? customModePickerIcon,
+    double? modePickerFinalRotation,
     CalendarModePickerTextHandler? modePickerTextHandler,
   }) {
     return CalendarDatePicker2Config(
@@ -211,6 +231,8 @@ class CalendarDatePicker2Config {
           weekdayLabelTextStyle ?? this.weekdayLabelTextStyle,
       firstDayOfWeek: firstDayOfWeek ?? this.firstDayOfWeek,
       controlsHeight: controlsHeight ?? this.controlsHeight,
+      weekdaysHeight: weekdaysHeight ?? this.weekdaysHeight,
+      dynamicRows: dynamicRows ?? this.dynamicRows,
       lastMonthIcon: lastMonthIcon ?? this.lastMonthIcon,
       nextMonthIcon: nextMonthIcon ?? this.nextMonthIcon,
       controlsTextStyle: controlsTextStyle ?? this.controlsTextStyle,
@@ -235,10 +257,13 @@ class CalendarDatePicker2Config {
           dayTextStylePredicate ?? this.dayTextStylePredicate,
       dayBuilder: dayBuilder ?? this.dayBuilder,
       yearBuilder: yearBuilder ?? this.yearBuilder,
+      cupertinoYearPicker: cupertinoYearPicker ?? this.cupertinoYearPicker,
       disableModePicker: disableModePicker ?? this.disableModePicker,
       centerAlignModePicker:
           centerAlignModePicker ?? this.centerAlignModePicker,
       customModePickerIcon: customModePickerIcon ?? this.customModePickerIcon,
+      modePickerFinalRotation:
+          modePickerFinalRotation ?? this.modePickerFinalRotation,
       modePickerTextHandler:
           modePickerTextHandler ?? this.modePickerTextHandler,
     );
@@ -257,6 +282,8 @@ class CalendarDatePicker2WithActionButtonsConfig
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
     double? controlsHeight,
+    double? weekdaysHeight,
+    bool? dynamicRows,
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
@@ -275,9 +302,11 @@ class CalendarDatePicker2WithActionButtonsConfig
     CalendarDayTextStylePredicate? dayTextStylePredicate,
     CalendarDayBuilder? dayBuilder,
     CalendarYearBuilder? yearBuilder,
+    bool? cupertinoYearPicker,
     bool? disableModePicker,
     bool? centerAlignModePicker,
     Widget? customModePickerIcon,
+    double? modePickerFinalRotation,
     CalendarModePickerTextHandler? modePickerTextHandler,
     this.gapBetweenCalendarAndButtons,
     this.cancelButtonTextStyle,
@@ -298,6 +327,8 @@ class CalendarDatePicker2WithActionButtonsConfig
           weekdayLabelTextStyle: weekdayLabelTextStyle,
           firstDayOfWeek: firstDayOfWeek,
           controlsHeight: controlsHeight,
+          weekdaysHeight: weekdaysHeight,
+          dynamicRows: dynamicRows,
           lastMonthIcon: lastMonthIcon,
           nextMonthIcon: nextMonthIcon,
           controlsTextStyle: controlsTextStyle,
@@ -316,9 +347,11 @@ class CalendarDatePicker2WithActionButtonsConfig
           dayTextStylePredicate: dayTextStylePredicate,
           dayBuilder: dayBuilder,
           yearBuilder: yearBuilder,
+          cupertinoYearPicker: cupertinoYearPicker,
           disableModePicker: disableModePicker,
           centerAlignModePicker: centerAlignModePicker,
           customModePickerIcon: customModePickerIcon,
+          modePickerFinalRotation: modePickerFinalRotation,
           modePickerTextHandler: modePickerTextHandler,
         );
 
@@ -360,6 +393,8 @@ class CalendarDatePicker2WithActionButtonsConfig
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
     double? controlsHeight,
+    double? weekdaysHeight,
+    bool? dynamicRows,
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
@@ -378,9 +413,11 @@ class CalendarDatePicker2WithActionButtonsConfig
     CalendarDayTextStylePredicate? dayTextStylePredicate,
     CalendarDayBuilder? dayBuilder,
     CalendarYearBuilder? yearBuilder,
+    bool? cupertinoYearPicker,
     bool? disableModePicker,
     bool? centerAlignModePicker,
     Widget? customModePickerIcon,
+    double? modePickerFinalRotation,
     CalendarModePickerTextHandler? modePickerTextHandler,
     double? gapBetweenCalendarAndButtons,
     TextStyle? cancelButtonTextStyle,
@@ -403,6 +440,8 @@ class CalendarDatePicker2WithActionButtonsConfig
           weekdayLabelTextStyle ?? this.weekdayLabelTextStyle,
       firstDayOfWeek: firstDayOfWeek ?? this.firstDayOfWeek,
       controlsHeight: controlsHeight ?? this.controlsHeight,
+      weekdaysHeight: weekdaysHeight ?? this.weekdaysHeight,
+      dynamicRows: dynamicRows ?? this.dynamicRows,
       lastMonthIcon: lastMonthIcon ?? this.lastMonthIcon,
       nextMonthIcon: nextMonthIcon ?? this.nextMonthIcon,
       controlsTextStyle: controlsTextStyle ?? this.controlsTextStyle,
@@ -427,10 +466,13 @@ class CalendarDatePicker2WithActionButtonsConfig
           dayTextStylePredicate ?? this.dayTextStylePredicate,
       dayBuilder: dayBuilder ?? this.dayBuilder,
       yearBuilder: yearBuilder ?? this.yearBuilder,
+      cupertinoYearPicker: cupertinoYearPicker ?? this.cupertinoYearPicker,
       disableModePicker: disableModePicker ?? this.disableModePicker,
       centerAlignModePicker:
           centerAlignModePicker ?? this.centerAlignModePicker,
       customModePickerIcon: customModePickerIcon ?? this.customModePickerIcon,
+      modePickerFinalRotation:
+          modePickerFinalRotation ?? this.modePickerFinalRotation,
       modePickerTextHandler:
           modePickerTextHandler ?? this.modePickerTextHandler,
       gapBetweenCalendarAndButtons:

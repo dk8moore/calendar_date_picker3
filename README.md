@@ -130,6 +130,8 @@ var results = await showCalendarDatePicker2Dialog(
 | weekdayLabelTextStyle       | TextStyle?                     | Custom text style for weekday labels                                                |
 | firstDayOfWeek              | int?                           | Index of the first day of week, where 0 points to Sunday, and 6 points to Saturday. |
 | controlsHeight              | double?                        | Custom height for calendar control toggle's height                                  |
+| weekdaysHeight              | double?                        | Custom height for calendar weekdays header's height                                 |
+| dynamicRows                 | bool?                          | Flag to enable dynamic row count resulting in varied day spacing                    |
 | lastMonthIcon               | Widget?                        | Custom icon for last month button control                                           |
 | nextMonthIcon               | Widget?                        | Custom icon for next month button control                                           |
 | controlsTextStyle           | TextStyle?                     | Custom text style for calendar mode toggle control                                  |
@@ -148,9 +150,11 @@ var results = await showCalendarDatePicker2Dialog(
 | dayTextStylePredicate       | CalendarDayTextStylePredicate? | Function to provide full control over calendar days text style                      |
 | dayBuilder                  | CalendarDayBuilder?            | Function to provide full control over day widget UI                                 |
 | yearBuilder                 | CalendarYearBuilder?           | Function to provide full control over year widget UI                                |
+| cupertinoYearPicker         | bool?                          | Flag to change month/year picker to Cupertino one                                   |
 | disableModePicker           | bool?                          | Flag to disable mode picker and hide the toggle icon                                |
 | centerAlignModePicker       | bool?                          | Flag to centralize year and month text label in controls                            |
 | customModePickerIcon        | Widget?                        | Custom icon for the mode picker button icon                                         |
+| modePickerFinalRotation     | double?                        | Custom final position of the mode picker icon as Tween end parameter                |
 | modePickerTextHandler       | CalendarModePickerTextHandler? | Function to control mode picker displayed text                                      |
 
 ### In addition to the configurations above, CalendarDatePicker2WithActionButtonsConfig has 9 extra options

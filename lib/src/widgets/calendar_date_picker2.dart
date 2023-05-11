@@ -5,6 +5,7 @@
 import 'dart:math' as math;
 
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -12,11 +13,9 @@ import 'package:flutter/services.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
-const double _dayPickerRowHeight = 42.0;
 const int _maxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
-// One extra row for the day-of-week header.
-const double _maxDayPickerHeight =
-    _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
+const double _maxDayPickerHeight = 252.0;
+const double _dayPickerRowHeight = _maxDayPickerHeight / _maxDayPickerRowCount;
 const double _monthPickerHorizontalPadding = 8.0;
 
 const int _yearPickerColumnCount = 3;
@@ -307,6 +306,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
       children: <Widget>[
         SizedBox(
           height: (widget.config.controlsHeight ?? _subHeaderHeight) +
+              (widget.config.weekdaysHeight ?? _dayPickerRowHeight) +
               _maxDayPickerHeight,
           child: _buildPicker(),
         ),
@@ -444,7 +444,11 @@ class _DatePickerModeToggleButtonState
                         widget.config.disableModePicker == true
                             ? const SizedBox()
                             : RotationTransition(
-                                turns: _controller,
+                                turns: Tween(
+                                  begin: 0.0,
+                                  end: (widget.config.modePickerFinalRotation ??
+                                      1.0),
+                                ).animate(_controller),
                                 child: widget.config.customModePickerIcon ??
                                     Icon(
                                       Icons.arrow_drop_down,
@@ -779,10 +783,57 @@ class _MonthPickerState extends State<_MonthPicker> {
     );
   }
 
+  /// Builds widgets showing abbreviated days of week. The first widget in the
+  /// returned list corresponds to the first day of week for the current locale.
+  ///
+  /// Examples:
+  ///
+  /// ```
+  /// ┌ Sunday is the first day of week in the US (en_US)
+  /// |
+  /// S M T W T F S  <-- the returned list contains these widgets
+  /// _ _ _ _ _ 1 2
+  /// 3 4 5 6 7 8 9
+  ///
+  /// ┌ But it's Monday in the UK (en_GB)
+  /// |
+  /// M T W T F S S  <-- the returned list contains these widgets
+  /// _ _ _ _ 1 2 3
+  /// 4 5 6 7 8 9 10
+  /// ```
+  List<Widget> _dayHeaders(
+      TextStyle? headerStyle, MaterialLocalizations localizations) {
+    final List<Widget> result = <Widget>[];
+    final weekdays =
+        widget.config.weekdayLabels ?? localizations.narrowWeekdays;
+    final firstDayOfWeek =
+        widget.config.firstDayOfWeek ?? localizations.firstDayOfWeekIndex;
+    assert(firstDayOfWeek >= 0 && firstDayOfWeek <= 6,
+        'firstDayOfWeek must between 0 and 6');
+    for (int i = firstDayOfWeek; true; i = (i + 1) % 7) {
+      final String weekday = weekdays[i];
+      result.add(ExcludeSemantics(
+        child: Center(
+          child: Text(
+            weekday,
+            style: widget.config.weekdayLabelTextStyle ?? headerStyle,
+          ),
+        ),
+      ));
+      if (i == (firstDayOfWeek - 1) % 7) break;
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color controlColor =
         Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final TextStyle? headerStyle = textTheme.bodySmall?.apply(
+      color: colorScheme.onSurface.withOpacity(0.60),
+    );
 
     return Semantics(
       child: Column(
@@ -816,6 +867,22 @@ class _MonthPickerState extends State<_MonthPicker> {
                   onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
                 ),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: _monthPickerHorizontalPadding,
+            ),
+            child: GridView.custom(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: _WeekHeaderGridDelegate(
+                  weekdaysCustomHeight: widget.config.weekdaysHeight),
+              childrenDelegate: SliverChildListDelegate(
+                _dayHeaders(headerStyle, _localizations),
+                addRepaintBoundaries: true,
+              ),
             ),
           ),
           Expanded(
@@ -936,57 +1003,12 @@ class _DayPickerState extends State<_DayPicker> {
     super.dispose();
   }
 
-  /// Builds widgets showing abbreviated days of week. The first widget in the
-  /// returned list corresponds to the first day of week for the current locale.
-  ///
-  /// Examples:
-  ///
-  /// ```
-  /// ┌ Sunday is the first day of week in the US (en_US)
-  /// |
-  /// S M T W T F S  <-- the returned list contains these widgets
-  /// _ _ _ _ _ 1 2
-  /// 3 4 5 6 7 8 9
-  ///
-  /// ┌ But it's Monday in the UK (en_GB)
-  /// |
-  /// M T W T F S S  <-- the returned list contains these widgets
-  /// _ _ _ _ 1 2 3
-  /// 4 5 6 7 8 9 10
-  /// ```
-  List<Widget> _dayHeaders(
-      TextStyle? headerStyle, MaterialLocalizations localizations) {
-    final List<Widget> result = <Widget>[];
-    final weekdays =
-        widget.config.weekdayLabels ?? localizations.narrowWeekdays;
-    final firstDayOfWeek =
-        widget.config.firstDayOfWeek ?? localizations.firstDayOfWeekIndex;
-    assert(firstDayOfWeek >= 0 && firstDayOfWeek <= 6,
-        'firstDayOfWeek must between 0 and 6');
-    for (int i = firstDayOfWeek; true; i = (i + 1) % 7) {
-      final String weekday = weekdays[i];
-      result.add(ExcludeSemantics(
-        child: Center(
-          child: Text(
-            weekday,
-            style: widget.config.weekdayLabelTextStyle ?? headerStyle,
-          ),
-        ),
-      ));
-      if (i == (firstDayOfWeek - 1) % 7) break;
-    }
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final TextStyle? headerStyle = textTheme.bodySmall?.apply(
-      color: colorScheme.onSurface.withOpacity(0.60),
-    );
     final TextStyle dayStyle = textTheme.bodySmall!;
     final Color enabledDayColor = colorScheme.onSurface.withOpacity(0.87);
     final Color disabledDayColor = colorScheme.onSurface.withOpacity(0.38);
@@ -996,12 +1018,20 @@ class _DayPickerState extends State<_DayPicker> {
 
     final int year = widget.displayedMonth.year;
     final int month = widget.displayedMonth.month;
+    final int dynamicDayPickerRowCount = calculateNumRows(year, month,
+        widget.config.firstDayOfWeek ?? localizations.firstDayOfWeekIndex);
+    final int dynamicDayPickerRowHeight =
+        (_maxDayPickerHeight / dynamicDayPickerRowCount).floor();
 
     final int daysInMonth = DateUtils.getDaysInMonth(year, month);
     final int dayOffset = getMonthFirstDayOffset(year, month,
         widget.config.firstDayOfWeek ?? localizations.firstDayOfWeekIndex);
 
-    final List<Widget> dayItems = _dayHeaders(headerStyle, localizations);
+    final List<Widget> dayItems =
+        []; /* (widget.config.dynamicRows ?? false)
+        ? []
+        : _dayHeaders(headerStyle, localizations); */
+
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
     int day = -dayOffset;
@@ -1176,7 +1206,11 @@ class _DayPickerState extends State<_DayPicker> {
           dayWidget = InkResponse(
             focusNode: _dayFocusNodes[day - 1],
             onTap: () => widget.onChanged(dayToBuild),
-            radius: _dayPickerRowHeight / 2 + 4,
+            radius: (widget.config.dynamicRows ?? false
+                        ? dynamicDayPickerRowHeight
+                        : _dayPickerRowHeight) /
+                    2 +
+                4,
             splashColor: selectedDayBackground.withOpacity(0.38),
             child: Semantics(
               // We want the day of month to be spoken first irrespective of the
@@ -1205,10 +1239,18 @@ class _DayPickerState extends State<_DayPicker> {
       child: GridView.custom(
         padding: EdgeInsets.zero,
         physics: const ClampingScrollPhysics(),
-        gridDelegate: _dayPickerGridDelegate,
+        gridDelegate: _DayPickerGridDelegate(
+          currentMonth: widget.displayedMonth,
+          dynamicRowHeight: widget.config.dynamicRows ?? false
+              ? dynamicDayPickerRowHeight
+              : null,
+          dynamicRowCount: widget.config.dynamicRows ?? false
+              ? dynamicDayPickerRowCount
+              : null,
+        ),
         childrenDelegate: SliverChildListDelegate(
           dayItems,
-          addRepaintBoundaries: false,
+          addRepaintBoundaries: true,
         ),
       ),
     );
@@ -1242,16 +1284,25 @@ class _DayPickerState extends State<_DayPicker> {
 }
 
 class _DayPickerGridDelegate extends SliverGridDelegate {
-  const _DayPickerGridDelegate();
+  final DateTime currentMonth;
+  final int? dynamicRowHeight;
+  final int? dynamicRowCount;
+  const _DayPickerGridDelegate({
+    required this.currentMonth,
+    this.dynamicRowHeight,
+    this.dynamicRowCount,
+  });
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     const int columnCount = DateTime.daysPerWeek;
     final double tileWidth = constraints.crossAxisExtent / columnCount;
-    final double tileHeight = math.min(
-      _dayPickerRowHeight,
-      constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 1),
+    double tileHeight = math.min(
+      (dynamicRowHeight ?? _dayPickerRowHeight).toDouble(),
+      constraints.viewportMainAxisExtent /
+          ((dynamicRowCount ?? _maxDayPickerRowCount + 1)),
     );
+    if (tileHeight > tileWidth) tileHeight = tileWidth;
     return SliverGridRegularTileLayout(
       childCrossAxisExtent: tileWidth,
       childMainAxisExtent: tileHeight,
@@ -1266,7 +1317,28 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
   bool shouldRelayout(_DayPickerGridDelegate oldDelegate) => false;
 }
 
-const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
+class _WeekHeaderGridDelegate extends SliverGridDelegate {
+  final double? weekdaysCustomHeight;
+  const _WeekHeaderGridDelegate({this.weekdaysCustomHeight});
+
+  @override
+  SliverGridLayout getLayout(SliverConstraints constraints) {
+    const int columnCount = DateTime.daysPerWeek;
+    final double tileWidth = constraints.crossAxisExtent / columnCount;
+    final double tileHeight = weekdaysCustomHeight ?? _dayPickerRowHeight;
+    return SliverGridRegularTileLayout(
+      childCrossAxisExtent: tileWidth,
+      childMainAxisExtent: tileHeight,
+      crossAxisCount: columnCount,
+      crossAxisStride: tileWidth,
+      mainAxisStride: tileHeight,
+      reverseCrossAxis: axisDirectionIsReversed(constraints.crossAxisDirection),
+    );
+  }
+
+  @override
+  bool shouldRelayout(_WeekHeaderGridDelegate oldDelegate) => false;
+}
 
 /// A scrollable grid of years to allow picking a year.
 ///

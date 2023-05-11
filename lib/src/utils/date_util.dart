@@ -10,3 +10,14 @@ int getMonthFirstDayOffset(int year, int month, int firstDayOfWeekIndex) {
   // and the day corresponding to the first of the month.
   return (weekdayFromMonday - firstDayOfWeekIndex) % 7;
 }
+
+int calculateNumRows(int year, int month, int firstDayOfWeek) {
+  int daysInMonth = DateTime(year, month + 1, 0).day;
+  int firstDayOfMonth = DateTime(year, month, 1).weekday;
+
+  int firstRowDays = (firstDayOfMonth - firstDayOfWeek < 0)
+      ? firstDayOfWeek - firstDayOfMonth
+      : 7 - firstDayOfMonth + firstDayOfWeek;
+  int numRows = 1 + ((daysInMonth - firstRowDays) / 7).ceil();
+  return numRows;
+}

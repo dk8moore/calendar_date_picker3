@@ -1,6 +1,7 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/cupertino.dart';
 
 final today = DateUtils.dateOnly(DateTime.now());
 
@@ -277,13 +278,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildDefaultSingleDatePickerWithValue() {
     final config = CalendarDatePicker2Config(
       selectedDayHighlightColor: Colors.amber[900],
-      weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      weekdayLabels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       weekdayLabelTextStyle: const TextStyle(
         color: Colors.black87,
         fontWeight: FontWeight.bold,
       ),
       firstDayOfWeek: 1,
       controlsHeight: 50,
+      customModePickerIcon: const Icon(CupertinoIcons.forward),
+      modePickerFinalRotation: 0.5,
+      dynamicRows: true,
       controlsTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 15,
@@ -334,6 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final config = CalendarDatePicker2Config(
       calendarType: CalendarDatePicker2Type.multi,
       selectedDayHighlightColor: Colors.indigo,
+      firstDayOfWeek: 1,
     );
     return Column(
       mainAxisSize: MainAxisSize.min,
