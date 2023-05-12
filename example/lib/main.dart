@@ -67,6 +67,29 @@ class _MyHomePageState extends State<MyHomePage> {
     DateTime.now(),
     DateTime.now().add(const Duration(days: 5)),
   ];
+  DateTime date = DateTime(2016, 10, 26);
+
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system
+        // navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +107,35 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDefaultMultiDatePickerWithValue(),
               _buildDefaultRangeDatePickerWithValue(),
               _buildCalendarWithActionButtons(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      CupertinoButton(
+                        // Display a CupertinoDatePicker in date picker mode.
+                        onPressed: () => _showDialog(
+                          CupertinoDatePicker(
+                            initialDateTime: date,
+                            mode: CupertinoDatePickerMode.monthYear,
+                            use24hFormat: true,
+                            // This shows day of week alongside day of month
+                            // showDayOfWeek: true,
+                            // This is called when the user changes the date.
+                            onDateTimeChanged: (DateTime newDate) {
+                              setState(() => date = newDate);
+                            },
+                          ),
+                        ),
+                        child: Text(
+                          '${date.month}-${date.day}-${date.year}',
+                          style: const TextStyle(
+                            fontSize: 22.0,
+                          ),
+                        ),
+                      ),
+                    ]),
+              ),
             ],
           ),
         ),
