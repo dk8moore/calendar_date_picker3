@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum CalendarDatePicker2Type { single, multi, range }
+enum CalendarDatePicker3Type { single, multi, range }
 
 typedef CalendarDayTextStylePredicate = TextStyle? Function({
   required DateTime date,
@@ -28,9 +28,9 @@ typedef CalendarModePickerTextHandler = String? Function({
   required DateTime monthDate,
 });
 
-class CalendarDatePicker2Config {
-  CalendarDatePicker2Config({
-    CalendarDatePicker2Type? calendarType,
+class CalendarDatePicker3Config {
+  CalendarDatePicker3Config({
+    CalendarDatePicker3Type? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
@@ -65,7 +65,7 @@ class CalendarDatePicker2Config {
     this.modePickerFinalRotation,
     this.modePickerTextHandler,
     this.selectedRangeDayTextStyle,
-  })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
+  })  : calendarType = calendarType ?? CalendarDatePicker3Type.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
             DateUtils.dateOnly(lastDate ?? DateTime(DateTime.now().year + 50)),
@@ -73,7 +73,7 @@ class CalendarDatePicker2Config {
         calendarViewMode = calendarViewMode ?? DatePickerMode.day;
 
   /// The enabled date picker mode
-  final CalendarDatePicker2Type calendarType;
+  final CalendarDatePicker3Type calendarType;
 
   /// The earliest allowable [DateTime] that the user can select.
   final DateTime firstDate;
@@ -132,7 +132,7 @@ class CalendarDatePicker2Config {
   final Color? selectedDayHighlightColor;
 
   /// The highlight color for day(s) included in the selected range
-  /// Only applicable when [calendarType] is [CalendarDatePicker2Type.range]
+  /// Only applicable when [calendarType] is [CalendarDatePicker3Type.range]
   final Color? selectedRangeHighlightColor;
 
   /// Custom text style for disabled calendar day(s)
@@ -183,8 +183,8 @@ class CalendarDatePicker2Config {
   /// Function to control mode picker displayed text
   final CalendarModePickerTextHandler? modePickerTextHandler;
 
-  CalendarDatePicker2Config copyWith({
-    CalendarDatePicker2Type? calendarType,
+  CalendarDatePicker3Config copyWith({
+    CalendarDatePicker3Type? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
@@ -220,7 +220,7 @@ class CalendarDatePicker2Config {
     double? modePickerFinalRotation,
     CalendarModePickerTextHandler? modePickerTextHandler,
   }) {
-    return CalendarDatePicker2Config(
+    return CalendarDatePicker3Config(
       calendarType: calendarType ?? this.calendarType,
       firstDate: DateUtils.dateOnly(firstDate ?? this.firstDate),
       lastDate: DateUtils.dateOnly(lastDate ?? this.lastDate),
@@ -270,10 +270,10 @@ class CalendarDatePicker2Config {
   }
 }
 
-class CalendarDatePicker2WithActionButtonsConfig
-    extends CalendarDatePicker2Config {
-  CalendarDatePicker2WithActionButtonsConfig({
-    CalendarDatePicker2Type? calendarType,
+class CalendarDatePicker3WithActionButtonsConfig
+    extends CalendarDatePicker3Config {
+  CalendarDatePicker3WithActionButtonsConfig({
+    CalendarDatePicker3Type? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
@@ -383,8 +383,8 @@ class CalendarDatePicker2WithActionButtonsConfig
   final EdgeInsets? buttonPadding;
 
   @override
-  CalendarDatePicker2WithActionButtonsConfig copyWith({
-    CalendarDatePicker2Type? calendarType,
+  CalendarDatePicker3WithActionButtonsConfig copyWith({
+    CalendarDatePicker3Type? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
@@ -429,7 +429,7 @@ class CalendarDatePicker2WithActionButtonsConfig
     bool? closeDialogOnOkTapped,
     EdgeInsets? buttonPadding,
   }) {
-    return CalendarDatePicker2WithActionButtonsConfig(
+    return CalendarDatePicker3WithActionButtonsConfig(
       calendarType: calendarType ?? this.calendarType,
       firstDate: DateUtils.dateOnly(firstDate ?? this.firstDate),
       lastDate: DateUtils.dateOnly(lastDate ?? this.lastDate),

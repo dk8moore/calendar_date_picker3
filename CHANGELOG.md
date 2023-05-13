@@ -107,7 +107,7 @@
 
 ## [0.2.8]
 
-- fix: Missing `firstDayOfWeek` in `CalendarDatePicker2WithActionButtonsConfig`
+- fix: Missing `firstDayOfWeek` in `CalendarDatePicker3WithActionButtonsConfig`
 
 ## [0.2.7]
 
@@ -129,7 +129,7 @@
 
 - feat: add `dayBorderRadius` into config
 - feat: add `yearBorderRadius` into config
-- refactor: change param `borderRadius`'type of function `showCalendarDatePicker2Dialog` to `BorderRadius`
+- refactor: change param `borderRadius`'type of function `showCalendarDatePicker3Dialog` to `BorderRadius`
 - refactor: code clean-up
 
 ## [0.2.3]
@@ -162,8 +162,8 @@
 
 ## [0.1.7]
 
-- Add `shouldCloseDialogAfterCancelTapped` into `CalendarDatePicker2WithActionButtonsConfig`
-- Add `dialogBackgroundColor` into `showCalendarDatePicker2Dialog`
+- Add `shouldCloseDialogAfterCancelTapped` into `CalendarDatePicker3WithActionButtonsConfig`
+- Add `dialogBackgroundColor` into `showCalendarDatePicker3Dialog`
 
 ## [0.1.6]
 

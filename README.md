@@ -1,8 +1,8 @@
-# CalendarDatePicker2
+# CalendarDatePicker3
 
-[![Pub Package](https://img.shields.io/badge/pub-v0.5.2-blue)](https://pub.dev/packages/calendar_date_picker2)
+[![Pub Package](https://img.shields.io/badge/pub-v0.5.2-blue)](https://pub.dev/packages/calendar_date_picker3)
 [![Pub Package](https://img.shields.io/badge/flutter-%3E%3D1.17.0-green)](https://flutter.dev/)
-[![GitHub Repo stars](https://img.shields.io/github/stars/theideasaler/calendar_date_picker2?style=social)](https://github.com/theideasaler/calendar_date_picker2)
+[![GitHub Repo stars](https://img.shields.io/github/stars/theideasaler/calendar_date_picker3?style=social)](https://github.com/theideasaler/calendar_date_picker3)
 
 A lightweight and customizable calendar picker based on Flutter CalendarDatePicker, with support for single date picker, range picker and multi picker.
 
@@ -12,22 +12,22 @@ A lightweight and customizable calendar picker based on Flutter CalendarDatePick
 
 ## Intro
 
-CalendarDatePicker2 consists of two main widgets:
+CalendarDatePicker3 consists of two main widgets:
 
-- `CalendarDatePicker2`, this widget only includes the calendar UI and will emit event whenever user taps a different date.
-- `CalendarDatePicker2WithActionButtons`, this widget includes calendar UI and the action buttons (CANCEL & OK). This widget will only emit the updated value when user taps 'OK' button.
+- `CalendarDatePicker3`, this widget only includes the calendar UI and will emit event whenever user taps a different date.
+- `CalendarDatePicker3WithActionButtons`, this widget includes calendar UI and the action buttons (CANCEL & OK). This widget will only emit the updated value when user taps 'OK' button.
 
 ## Features
 
 - Extended CalendarDatePicker allows `null` initialDate
 - Highly Customizable UI
 - Supports three modes: single, multi and range
-- Built-in `showCalendarDatePicker2Dialog`
+- Built-in `showCalendarDatePicker3Dialog`
 - Multi-language supports
 
 ## How to use
 
-**Make sure to check out [examples](https://github.com/theideasaler/calendar_date_picker2/tree/main/example) for more details.**
+**Make sure to check out [examples](https://github.com/theideasaler/calendar_date_picker3/tree/main/example) for more details.**
 
 ### Installation
 
@@ -35,14 +35,14 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  calendar_date_picker2: ^0.5.2
+  calendar_date_picker3: ^0.5.2
 ```
 
 ### Basic setup
 
-_The complete example is available [here](https://github.com/theideasaler/calendar_date_picker2/blob/main/example/lib/main.dart)._
+_The complete example is available [here](https://github.com/theideasaler/calendar_date_picker3/blob/main/example/lib/main.dart)._
 
-**CalendarDatePicker2** requires you to provide `config` and `value`:
+**CalendarDatePicker3** requires you to provide `config` and `value`:
 
 - `config` contains the configurations for your calendar setup and UI.
 - `value` is initial values passed into your calendar picker, `value` must be a `List`.
@@ -50,8 +50,8 @@ _The complete example is available [here](https://github.com/theideasaler/calend
 ### The minimum working sample
 
 ```dart
-CalendarDatePicker2(
-  config: CalendarDatePicker2Config(),
+CalendarDatePicker3(
+  config: CalendarDatePicker3Config(),
   value: _dates,
   onValueChanged: (dates) => _dates = dates,
 );
@@ -59,16 +59,16 @@ CalendarDatePicker2(
 
 ### Single Date Picker Configuration
 
-During the initialization of `CalendarDatePicker2Config` the `calendarType` of the config instance will by default set to `CalendarDatePicker2Type.single`, so you don't have to set the calendar type specifically.
+During the initialization of `CalendarDatePicker3Config` the `calendarType` of the config instance will by default set to `CalendarDatePicker3Type.single`, so you don't have to set the calendar type specifically.
 
 ### Multi Date Picker Configuration
 
-In order to use multi mode date picker, you will need to set the calendarType of config to `CalendarDatePicker2Type.multi`:
+In order to use multi mode date picker, you will need to set the calendarType of config to `CalendarDatePicker3Type.multi`:
 
 ```dart
-CalendarDatePicker2(
-  config: CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.multi,
+CalendarDatePicker3(
+  config: CalendarDatePicker3Config(
+      calendarType: CalendarDatePicker3Type.multi,
   ),
   value: _dates,
   onValueChanged: (dates) => _dates = dates,
@@ -77,12 +77,12 @@ CalendarDatePicker2(
 
 ### Range Date Picker Configuration
 
-In order to use range mode date picker, you will need to set the calendarType of config to `CalendarDatePicker2Type.range`:
+In order to use range mode date picker, you will need to set the calendarType of config to `CalendarDatePicker3Type.range`:
 
 ```dart
-CalendarDatePicker2(
-  config: CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.range,
+CalendarDatePicker3(
+  config: CalendarDatePicker3Config(
+      calendarType: CalendarDatePicker3Type.range,
   ),
   value: _dates,
   onValueChanged: (dates) => _dates = dates,
@@ -91,13 +91,13 @@ CalendarDatePicker2(
 
 ### Use built-in dialog display method
 
-This package includes built-in support to display calendar as a dialog. To use it, you will need to call `showCalendarDatePicker2Dialog`, which takes three required arguments: `context`, `config`, `dialogSize`:
+This package includes built-in support to display calendar as a dialog. To use it, you will need to call `showCalendarDatePicker3Dialog`, which takes three required arguments: `context`, `config`, `dialogSize`:
 
 ```dart
 ...
-var results = await showCalendarDatePicker2Dialog(
+var results = await showCalendarDatePicker3Dialog(
   context: context,
-  config: CalendarDatePicker2WithActionButtonsConfig(),
+  config: CalendarDatePicker3WithActionButtonsConfig(),
   dialogSize: const Size(325, 400),
   value: _dates,
   borderRadius: BorderRadius.circular(15),
@@ -107,21 +107,21 @@ var results = await showCalendarDatePicker2Dialog(
 
 ### Config options
 
-### For CalendarDatePicker2 widget
+### For CalendarDatePicker3 widget
 
 | Argument                | Type                           | Description                                              |
 | ----------------------- | ------------------------------ | -------------------------------------------------------- |
-| config                  | CalendarDatePicker2Config      | Calendar UI related configurations                       |
+| config                  | CalendarDatePicker3Config      | Calendar UI related configurations                       |
 | value                   | List\<DateTime?\>              | The selected [DateTime]s that the picker should display. |
 | onValueChanged          | ValueChanged<List<DateTime?>>? | Called when the selected dates changed                   |
 | displayedMonthDate      | DateTime?                      | Date to control calendar displayed month                 |
 | onDisplayedMonthChanged | ValueChanged\<DateTime\>?      | The initially displayed view of the calendar picker      |
 
-### For CalendarDatePicker2Config:
+### For CalendarDatePicker3Config:
 
 | Option                      | Type                           | Description                                                                         |
 | --------------------------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-| calendarType                | CalendarDatePicker2Type?       | Calendar picker type, has 3 values: single, multi, range                            |
+| calendarType                | CalendarDatePicker3Type?       | Calendar picker type, has 3 values: single, multi, range                            |
 | firstDate                   | DateTime?                      | The earliest allowable DateTime user can select                                     |
 | lastDate                    | DateTime?                      | The latest allowable DateTime user can select                                       |
 | currentDate                 | DateTime?                      | The DateTime representing today which will be outlined in calendar                  |
@@ -157,7 +157,7 @@ var results = await showCalendarDatePicker2Dialog(
 | modePickerFinalRotation     | double?                        | Custom final position of the mode picker icon as Tween end parameter                |
 | modePickerTextHandler       | CalendarModePickerTextHandler? | Function to control mode picker displayed text                                      |
 
-### In addition to the configurations above, CalendarDatePicker2WithActionButtonsConfig has 9 extra options
+### In addition to the configurations above, CalendarDatePicker3WithActionButtonsConfig has 9 extra options
 
 | Option                       | Type        | Description                                     |
 | ---------------------------- | ----------- | ----------------------------------------------- |
@@ -178,10 +178,10 @@ By using the configs above, you could make your own custom calendar picker as yo
 <img width="300" alt="image" src="https://user-images.githubusercontent.com/17869748/223992571-f153515d-170d-48f6-afce-84f59f58940b.png"> <img width="300" alt="image" src="https://user-images.githubusercontent.com/17869748/223992976-5539a3af-6409-4983-958b-ca927a9d714f.png">
 
 ```dart
-CalendarDatePicker2WithActionButtons(
-  config: CalendarDatePicker2WithActionButtonsConfig(
+CalendarDatePicker3WithActionButtons(
+  config: CalendarDatePicker3WithActionButtonsConfig(
     firstDayOfWeek: 1,
-    calendarType: CalendarDatePicker2Type.range,
+    calendarType: CalendarDatePicker3Type.range,
     selectedDayTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
     selectedDayHighlightColor: Colors.purple[800],
     centerAlignModePicker: true,

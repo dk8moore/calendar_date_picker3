@@ -1,4 +1,4 @@
-library calendar_date_picker2;
+library calendar_date_picker3;
 
 export 'src/models/index.dart';
 export 'src/utils/index.dart';

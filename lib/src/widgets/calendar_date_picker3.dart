@@ -4,7 +4,7 @@
 
 import 'dart:math' as math;
 
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:calendar_date_picker3/calendar_date_picker3.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +28,8 @@ const double _monthNavButtonsWidth = 108.0;
 
 T? _ambiguate<T>(T? value) => value;
 
-class CalendarDatePicker2 extends StatefulWidget {
-  CalendarDatePicker2({
+class CalendarDatePicker3 extends StatefulWidget {
+  CalendarDatePicker3({
     required this.config,
     required this.value,
     this.onValueChanged,
@@ -40,12 +40,12 @@ class CalendarDatePicker2 extends StatefulWidget {
     const valid = true;
     const invalid = false;
 
-    if (config.calendarType == CalendarDatePicker2Type.single) {
+    if (config.calendarType == CalendarDatePicker3Type.single) {
       assert(value.length < 2,
           'Error: single date picker only allows maximum one initial date');
     }
 
-    if (config.calendarType == CalendarDatePicker2Type.range &&
+    if (config.calendarType == CalendarDatePicker3Type.range &&
         value.length > 1) {
       final isRangePickerValueValid = value[0] == null
           ? (value[1] != null ? invalid : valid)
@@ -61,7 +61,7 @@ class CalendarDatePicker2 extends StatefulWidget {
   }
 
   /// The calendar UI related configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePicker3Config config;
 
   /// The selected [DateTime]s that the picker should display.
   final List<DateTime?> value;
@@ -76,10 +76,10 @@ class CalendarDatePicker2 extends StatefulWidget {
   final ValueChanged<DateTime>? onDisplayedMonthChanged;
 
   @override
-  State<CalendarDatePicker2> createState() => _CalendarDatePicker2State();
+  State<CalendarDatePicker3> createState() => _CalendarDatePicker3State();
 }
 
-class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
+class _CalendarDatePicker3State extends State<CalendarDatePicker3> {
   bool _announcedInitialDate = false;
   late List<DateTime?> _selectedDates;
   late DatePickerMode _mode;
@@ -103,7 +103,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
   }
 
   @override
-  void didUpdateWidget(CalendarDatePicker2 oldWidget) {
+  void didUpdateWidget(CalendarDatePicker3 oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.config.calendarViewMode != oldWidget.config.calendarViewMode) {
       _mode = widget.config.calendarViewMode;
@@ -229,9 +229,9 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
       var selectedDates = [..._selectedDates];
       selectedDates.removeWhere((d) => d == null);
 
-      if (widget.config.calendarType == CalendarDatePicker2Type.single) {
+      if (widget.config.calendarType == CalendarDatePicker3Type.single) {
         selectedDates = [value];
-      } else if (widget.config.calendarType == CalendarDatePicker2Type.multi) {
+      } else if (widget.config.calendarType == CalendarDatePicker3Type.multi) {
         final index =
             selectedDates.indexWhere((d) => DateUtils.isSameDay(d, value));
         if (index != -1) {
@@ -239,7 +239,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
         } else {
           selectedDates.add(value);
         }
-      } else if (widget.config.calendarType == CalendarDatePicker2Type.range) {
+      } else if (widget.config.calendarType == CalendarDatePicker3Type.range) {
         if (selectedDates.isEmpty) {
           selectedDates.add(value);
         } else {
@@ -261,7 +261,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
         ..sort((d1, d2) => d1!.compareTo(d2!));
 
       final isValueDifferent =
-          widget.config.calendarType != CalendarDatePicker2Type.single ||
+          widget.config.calendarType != CalendarDatePicker3Type.single ||
               !DateUtils.isSameDay(selectedDates[0],
                   _selectedDates.isNotEmpty ? _selectedDates[0] : null);
       if (isValueDifferent) {
@@ -366,7 +366,7 @@ class _DatePickerModeToggleButton extends StatefulWidget {
   final VoidCallback onTitlePressed;
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePicker3Config config;
 
   @override
   _DatePickerModeToggleButtonState createState() =>
@@ -506,7 +506,7 @@ class _MonthPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePicker3Config config;
 
   /// The initial month to display.
   final DateTime initialMonth;
@@ -966,7 +966,7 @@ class _DayPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePicker3Config config;
 
   /// The currently selected dates.
   ///
@@ -1113,7 +1113,7 @@ class _DayPickerState extends State<_DayPicker> {
         }
 
         final isFullySelectedRangePicker =
-            widget.config.calendarType == CalendarDatePicker2Type.range &&
+            widget.config.calendarType == CalendarDatePicker3Type.range &&
                 widget.selectedDates.length == 2;
         var isDateInBetweenRangePickerSelectedDates = false;
 
@@ -1358,11 +1358,11 @@ class _WeekHeaderGridDelegate extends SliverGridDelegate {
 /// A scrollable grid of years to allow picking a year.
 ///
 /// The year picker widget is rarely used directly. Instead, consider using
-/// [CalendarDatePicker2], or [showDatePicker2] which create full date pickers.
+/// [CalendarDatePicker3], or [showDatePicker2] which create full date pickers.
 ///
 /// See also:
 ///
-///  * [CalendarDatePicker2], which provides a Material Design date picker
+///  * [CalendarDatePicker3], which provides a Material Design date picker
 ///    interface.
 ///
 ///  * [showDatePicker2], which shows a dialog containing a Material Design
@@ -1380,7 +1380,7 @@ class YearPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePicker3Config config;
 
   /// The currently selected dates.
   ///

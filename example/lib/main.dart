@@ -1,4 +1,4 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:calendar_date_picker3/calendar_date_picker3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CalendarDatePicker2 Demo',
+      title: 'CalendarDatePicker3 Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         Locale('ko', ''),
         Locale('hi', ''),
       ],
-      home: const MyHomePage(title: 'CalendarDatePicker2 Demo'),
+      home: const MyHomePage(title: 'CalendarDatePicker3 Demo'),
     );
   }
 }
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String _getValueText(
-    CalendarDatePicker2Type datePickerType,
+    CalendarDatePicker3Type datePickerType,
     List<DateTime?> values,
   ) {
     values =
@@ -153,13 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .toString()
         .replaceAll('00:00:00.000', '');
 
-    if (datePickerType == CalendarDatePicker2Type.multi) {
+    if (datePickerType == CalendarDatePicker3Type.multi) {
       valueText = values.isNotEmpty
           ? values
               .map((v) => v.toString().replaceAll('00:00:00.000', ''))
               .join(', ')
           : 'null';
-    } else if (datePickerType == CalendarDatePicker2Type.range) {
+    } else if (datePickerType == CalendarDatePicker3Type.range) {
       if (values.isNotEmpty) {
         final startDate = values[0].toString().replaceAll('00:00:00.000', '');
         final endDate = values.length > 1
@@ -184,9 +184,9 @@ class _MyHomePageState extends State<MyHomePage> {
       fontWeight: FontWeight.w700,
       decoration: TextDecoration.underline,
     );
-    final config = CalendarDatePicker2WithActionButtonsConfig(
+    final config = CalendarDatePicker3WithActionButtonsConfig(
       dayTextStyle: dayTextStyle,
-      calendarType: CalendarDatePicker2Type.range,
+      calendarType: CalendarDatePicker3Type.range,
       selectedDayHighlightColor: Colors.purple[800],
       closeDialogOnCancelTapped: true,
       firstDayOfWeek: 1,
@@ -301,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           ElevatedButton(
             onPressed: () async {
-              final values = await showCalendarDatePicker2Dialog(
+              final values = await showCalendarDatePicker3Dialog(
                 context: context,
                 config: config,
                 dialogSize: const Size(325, 400),
@@ -328,7 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultSingleDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
+    final config = CalendarDatePicker3Config(
       selectedDayHighlightColor: Colors.amber[900],
       weekdayLabels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       weekdayLabelTextStyle: const TextStyle(
@@ -361,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Single Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePicker3(
           config: config,
           value: _singleDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -387,8 +387,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultMultiDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.multi,
+    final config = CalendarDatePicker3Config(
+      calendarType: CalendarDatePicker3Type.multi,
       selectedDayHighlightColor: Colors.indigo,
       firstDayOfWeek: 1,
     );
@@ -397,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Multi Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePicker3(
           config: config,
           value: _multiDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -425,8 +425,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultRangeDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.range,
+    final config = CalendarDatePicker3Config(
+      calendarType: CalendarDatePicker3Type.range,
       selectedDayHighlightColor: Colors.teal[800],
       weekdayLabelTextStyle: const TextStyle(
         color: Colors.black87,
@@ -443,7 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Range Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePicker3(
           config: config,
           value: _rangeDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -469,8 +469,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildCalendarWithActionButtons() {
-    final config = CalendarDatePicker2WithActionButtonsConfig(
-      calendarType: CalendarDatePicker2Type.range,
+    final config = CalendarDatePicker3WithActionButtonsConfig(
+      calendarType: CalendarDatePicker3Type.range,
       disableModePicker: true,
     );
     return Column(
@@ -478,7 +478,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Date Picker With Action Buttons'),
-        CalendarDatePicker2WithActionButtons(
+        CalendarDatePicker3WithActionButtons(
           config: config,
           value: _rangeDatePickerWithActionButtonsWithValue,
           onValueChanged: (dates) => setState(
