@@ -283,17 +283,32 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
           onDisplayedMonthChanged: _handleMonthChanged,
         );
       case DatePickerMode.year:
-        return Padding(
-          padding: EdgeInsets.only(
-              top: widget.config.controlsHeight ?? _subHeaderHeight),
-          child: YearPicker(
-            config: widget.config,
-            key: _yearPickerKey,
-            initialMonth: _currentDisplayedMonthDate,
-            selectedDates: _selectedDates,
-            onChanged: _handleYearChanged,
-          ),
-        );
+        if (widget.config.cupertinoYearPicker ?? false) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: widget.config.controlsHeight ?? _subHeaderHeight),
+            child: CupertinoDatePicker(
+              initialDateTime: _currentDisplayedMonthDate,
+              mode: CupertinoDatePickerMode.monthYear,
+              // This is called when the user changes the date.
+              onDateTimeChanged: (DateTime newDate) {
+                _currentDisplayedMonthDate = newDate;
+              },
+            ),
+          );
+        } else {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: widget.config.controlsHeight ?? _subHeaderHeight),
+            child: YearPicker(
+              config: widget.config,
+              key: _yearPickerKey,
+              initialMonth: _currentDisplayedMonthDate,
+              selectedDates: _selectedDates,
+              onChanged: _handleYearChanged,
+            ),
+          );
+        }
     }
   }
 
