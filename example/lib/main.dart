@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const CupertinoApp(
       title: 'CalendarDatePicker3 Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: CupertinoThemeData(
+        primaryColor: Colors.blue,
       ),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      supportedLocales: const [
+      supportedLocales: [
         Locale('en', ''),
         Locale('zh', ''),
         Locale('he', ''),
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         Locale('ko', ''),
         Locale('hi', ''),
       ],
-      home: const MyHomePage(title: 'CalendarDatePicker3 Demo'),
+      home: MyHomePage(title: 'CalendarDatePicker3 Demo'),
     );
   }
 }
@@ -329,32 +329,66 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildDefaultSingleDatePickerWithValue() {
     final config = CalendarDatePicker3Config(
-      selectedDayHighlightColor: Colors.amber[900],
       weekdayLabels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       weekdayLabelTextStyle: const TextStyle(
-        color: Colors.black87,
-        fontWeight: FontWeight.bold,
+        color: CupertinoColors.systemGrey2,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
       ),
+      weekdaysHeight: 20,
       firstDayOfWeek: 1,
       controlsHeight: 50,
-      customModePickerIcon: const Icon(CupertinoIcons.forward),
-      modePickerFinalRotation: 0.5,
-      dynamicRows: true,
       controlsTextStyle: const TextStyle(
         color: Colors.black,
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
+        fontSize: 17,
+        fontWeight: FontWeight.w600,
+      ),
+      dynamicRows: true,
+      cupertinoYearPicker: true,
+      todayTextStyle: const TextStyle(
+        color: CupertinoColors.activeBlue,
+        fontSize: 19,
+        fontWeight: FontWeight.w400,
+      ),
+      todaySelectedTextStyle: const TextStyle(
+        color: CupertinoColors.white,
+        fontSize: 21,
+        fontWeight: FontWeight.w600,
+      ),
+      disableTodayCircle: true,
+      controlsOpenTextStyle: const TextStyle(
+        color: CupertinoColors.activeBlue,
+        fontSize: 17,
+        fontWeight: FontWeight.w600,
       ),
       dayTextStyle: const TextStyle(
-        color: Colors.amber,
-        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontSize: 19,
+        fontWeight: FontWeight.w400,
       ),
-      disabledDayTextStyle: const TextStyle(
-        color: Colors.grey,
+      selectedDayHighlightColor: CupertinoColors.systemBlue.withOpacity(0.14),
+      selectedTodayHighlightColor: CupertinoColors.activeBlue,
+      selectedDayTextStyle: const TextStyle(
+        color: CupertinoColors.activeBlue,
+        fontSize: 21,
+        fontWeight: FontWeight.w600,
       ),
-      selectableDayPredicate: (day) => !day
-          .difference(DateTime.now().subtract(const Duration(days: 3)))
-          .isNegative,
+      lastMonthIcon: const Icon(
+        CupertinoIcons.back,
+        color: CupertinoColors.activeBlue,
+        size: 27,
+      ),
+      nextMonthIcon: const Icon(
+        CupertinoIcons.forward,
+        color: CupertinoColors.activeBlue,
+        size: 27,
+      ),
+      customModePickerIcon: const Icon(
+        CupertinoIcons.forward,
+        size: 21,
+        color: CupertinoColors.activeBlue,
+      ),
+      modePickerFinalRotation: 0.5,
     );
     return Column(
       mainAxisSize: MainAxisSize.min,

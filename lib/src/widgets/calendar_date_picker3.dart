@@ -292,7 +292,7 @@ class _CalendarDatePicker3State extends State<CalendarDatePicker3> {
               mode: CupertinoDatePickerMode.monthYear,
               // This is called when the user changes the date.
               onDateTimeChanged: (DateTime newDate) {
-                _currentDisplayedMonthDate = newDate;
+                setState(() => _currentDisplayedMonthDate = newDate);
               },
             ),
           );
@@ -431,15 +431,12 @@ class _DatePickerModeToggleButtonState
               button: true,
               child: SizedBox(
                 height: (widget.config.controlsHeight ?? _subHeaderHeight),
-                child: InkWell(
+                child: GestureDetector(
                   onTap: widget.config.disableModePicker == true
                       ? null
                       : widget.onTitlePressed,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: widget.config.centerAlignModePicker == true
-                            ? 0
-                            : 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: Row(
                       mainAxisAlignment:
                           widget.config.centerAlignModePicker == true
@@ -450,10 +447,15 @@ class _DatePickerModeToggleButtonState
                           child: Text(
                             widget.title,
                             overflow: TextOverflow.ellipsis,
-                            style: widget.config.controlsTextStyle ??
-                                textTheme.titleSmall?.copyWith(
-                                  color: controlColor,
-                                ),
+                            style: (widget.mode == DatePickerMode.day)
+                                ? widget.config.controlsTextStyle ??
+                                    textTheme.titleSmall?.copyWith(
+                                      color: controlColor,
+                                    )
+                                : widget.config.controlsOpenTextStyle ??
+                                    textTheme.titleSmall?.copyWith(
+                                      color: controlColor,
+                                    ),
                           ),
                         ),
                         widget.config.disableModePicker == true
@@ -1065,16 +1067,24 @@ class _DayPickerState extends State<_DayPicker> {
         final bool isToday =
             DateUtils.isSameDay(widget.config.currentDate, dayToBuild);
 
+        final bool selectedIsToday = widget.selectedDates
+            .any((d) => DateUtils.isSameDay(d, widget.config.currentDate));
+
         BoxDecoration? decoration;
         Color dayColor = enabledDayColor;
         if (isSelectedDay) {
           // The selected day gets a circle background highlight, and a
           // contrasting text color.
           dayColor = selectedDayColor;
+          Color decorationColor =
+              widget.config.selectedDayHighlightColor ?? selectedDayBackground;
+          if (selectedIsToday) {
+            decorationColor =
+                widget.config.selectedTodayHighlightColor ?? decorationColor;
+          }
           decoration = BoxDecoration(
             borderRadius: widget.config.dayBorderRadius,
-            color: widget.config.selectedDayHighlightColor ??
-                selectedDayBackground,
+            color: decorationColor,
             shape: widget.config.dayBorderRadius != null
                 ? BoxShape.rectangle
                 : BoxShape.circle,
@@ -1085,13 +1095,15 @@ class _DayPickerState extends State<_DayPicker> {
           // The current day gets a different text color and a circle stroke
           // border.
           dayColor = widget.config.selectedDayHighlightColor ?? todayColor;
-          decoration = BoxDecoration(
-            borderRadius: widget.config.dayBorderRadius,
-            border: Border.all(color: dayColor),
-            shape: widget.config.dayBorderRadius != null
-                ? BoxShape.rectangle
-                : BoxShape.circle,
-          );
+          if (!(widget.config.disableTodayCircle ?? false)) {
+            decoration = BoxDecoration(
+              borderRadius: widget.config.dayBorderRadius,
+              border: Border.all(color: dayColor),
+              shape: widget.config.dayBorderRadius != null
+                  ? BoxShape.rectangle
+                  : BoxShape.circle,
+            );
+          }
         }
 
         var customDayTextStyle =
@@ -1133,7 +1145,13 @@ class _DayPickerState extends State<_DayPicker> {
         }
 
         if (isSelectedDay) {
-          customDayTextStyle = widget.config.selectedDayTextStyle;
+          if (widget.config.calendarType == CalendarDatePicker3Type.single &&
+              widget.selectedDates.any(
+                  (d) => DateUtils.isSameDay(d, widget.config.currentDate))) {
+            customDayTextStyle = widget.config.todaySelectedTextStyle;
+          } else {
+            customDayTextStyle = widget.config.selectedDayTextStyle;
+          }
         }
 
         final dayTextStyle =
@@ -1222,11 +1240,12 @@ class _DayPickerState extends State<_DayPicker> {
             focusNode: _dayFocusNodes[day - 1],
             onTap: () => widget.onChanged(dayToBuild),
             radius: (widget.config.dynamicRows ?? false
-                        ? dynamicDayPickerRowHeight
-                        : _dayPickerRowHeight) /
-                    2 +
-                4,
-            splashColor: selectedDayBackground.withOpacity(0.38),
+                    ? dynamicDayPickerRowHeight
+                    : _dayPickerRowHeight) /
+                2,
+            splashColor: (widget.config.selectedDayHighlightColor ??
+                    selectedDayBackground)
+                .withOpacity(0.38),
             child: Semantics(
               // We want the day of month to be spoken first irrespective of the
               // locale-specific preferences or TextDirection. This is because
@@ -1515,7 +1534,7 @@ class _YearPickerState extends State<YearPicker> {
         child: yearItem,
       );
     } else {
-      yearItem = InkWell(
+      yearItem = GestureDetector(
         key: ValueKey<int>(year),
         onTap: () => widget.onChanged(
           DateTime(

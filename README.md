@@ -135,13 +135,17 @@ var results = await showCalendarDatePicker3Dialog(
 | lastMonthIcon               | Widget?                        | Custom icon for last month button control                                           |
 | nextMonthIcon               | Widget?                        | Custom icon for next month button control                                           |
 | controlsTextStyle           | TextStyle?                     | Custom text style for calendar mode toggle control                                  |
+| controlsOpenTextStyle       | TextStyle?                     | Custom text style for calendar mode toggle control when open                        |
 | dayTextStyle                | TextStyle?                     | Custom text style for calendar day text                                             |
 | selectedDayTextStyle        | TextStyle?                     | Custom text style for selected calendar day text                                    |
 | selectedRangeDayTextStyle   | TextStyle?                     | Custom text style for selected range calendar day(s)                                |
-| selectedDayHighlightColor   | Color?                         | The highlight color selected day                                                    |
+| selectedDayHighlightColor   | Color?                         | The highlight color for selected day(s)                                             |
+| selectedTodayHighlightColor | Color?                         | The highlight color for selected day if it's today                                  |
 | selectedRangeHighlightColor | Color?                         | The highlight color for day(s) included in the selected range                       |
 | disabledDayTextStyle        | TextStyle?                     | Custom text style for disabled calendar day(s)                                      |
 | todayTextStyle              | TextStyle?                     | Custom text style for current calendar day                                          |
+| todaySelectedTextStyle      | TextStyle?                     | Custom text style for current calendar day when selected                            |
+| disableTodayCircle          | bool?                          | Flag to disable circle around today's number                                        |
 | yearTextStyle               | TextStyle?                     | Custom text style for years list                                                    |
 | selectedYearTextStyle       | TextStyle?                     | Custom text style for selected year                                                 |
 | dayBorderRadius             | BorderRadius?                  | Custom border radius for day indicator                                              |

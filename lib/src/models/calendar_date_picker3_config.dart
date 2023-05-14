@@ -44,12 +44,16 @@ class CalendarDatePicker3Config {
     this.lastMonthIcon,
     this.nextMonthIcon,
     this.controlsTextStyle,
+    this.controlsOpenTextStyle,
     this.dayTextStyle,
     this.selectedDayTextStyle,
     this.selectedDayHighlightColor,
+    this.selectedTodayHighlightColor,
     this.selectedRangeHighlightColor,
     this.disabledDayTextStyle,
     this.todayTextStyle,
+    this.todaySelectedTextStyle,
+    this.disableTodayCircle,
     this.yearTextStyle,
     this.selectedYearTextStyle,
     this.dayBorderRadius,
@@ -119,6 +123,9 @@ class CalendarDatePicker3Config {
   /// Custom text style for calendar mode toggle control
   final TextStyle? controlsTextStyle;
 
+  /// Custom text style for calendar mode toggle control when open
+  final TextStyle? controlsOpenTextStyle;
+
   /// Custom text style for all calendar days
   final TextStyle? dayTextStyle;
 
@@ -131,6 +138,9 @@ class CalendarDatePicker3Config {
   /// The highlight color for selected day(s)
   final Color? selectedDayHighlightColor;
 
+  /// The highlight color for selected day if it's today
+  final Color? selectedTodayHighlightColor;
+
   /// The highlight color for day(s) included in the selected range
   /// Only applicable when [calendarType] is [CalendarDatePicker3Type.range]
   final Color? selectedRangeHighlightColor;
@@ -140,6 +150,12 @@ class CalendarDatePicker3Config {
 
   /// Custom text style for today
   final TextStyle? todayTextStyle;
+
+  /// Custom text style for current calendar day when selected
+  final TextStyle? todaySelectedTextStyle;
+
+  /// Flag to disable circle around today's number
+  final bool? disableTodayCircle;
 
   // Custom text style for years list
   final TextStyle? yearTextStyle;
@@ -198,12 +214,16 @@ class CalendarDatePicker3Config {
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
+    TextStyle? controlsOpenTextStyle,
     TextStyle? dayTextStyle,
     TextStyle? selectedDayTextStyle,
     Color? selectedDayHighlightColor,
+    Color? selectedTodayHighlightColor,
     Color? selectedRangeHighlightColor,
     TextStyle? disabledDayTextStyle,
     TextStyle? todayTextStyle,
+    TextStyle? todaySelectedTextStyle,
+    bool? disableTodayCircle,
     TextStyle? yearTextStyle,
     TextStyle? selectedYearTextStyle,
     TextStyle? selectedRangeDayTextStyle,
@@ -236,14 +256,21 @@ class CalendarDatePicker3Config {
       lastMonthIcon: lastMonthIcon ?? this.lastMonthIcon,
       nextMonthIcon: nextMonthIcon ?? this.nextMonthIcon,
       controlsTextStyle: controlsTextStyle ?? this.controlsTextStyle,
+      controlsOpenTextStyle:
+          controlsOpenTextStyle ?? this.controlsOpenTextStyle,
       dayTextStyle: dayTextStyle ?? this.dayTextStyle,
       selectedDayTextStyle: selectedDayTextStyle ?? this.selectedDayTextStyle,
       selectedDayHighlightColor:
           selectedDayHighlightColor ?? this.selectedDayHighlightColor,
+      selectedTodayHighlightColor:
+          selectedTodayHighlightColor ?? this.selectedTodayHighlightColor,
       selectedRangeHighlightColor:
           selectedRangeHighlightColor ?? this.selectedRangeHighlightColor,
       disabledDayTextStyle: disabledDayTextStyle ?? this.disabledDayTextStyle,
       todayTextStyle: todayTextStyle ?? this.todayTextStyle,
+      todaySelectedTextStyle:
+          todaySelectedTextStyle ?? this.todaySelectedTextStyle,
+      disableTodayCircle: disableTodayCircle ?? this.disableTodayCircle,
       yearTextStyle: yearTextStyle ?? this.yearTextStyle,
       selectedYearTextStyle:
           selectedYearTextStyle ?? this.selectedYearTextStyle,
@@ -287,12 +314,16 @@ class CalendarDatePicker3WithActionButtonsConfig
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
+    TextStyle? controlsOpenTextStyle,
     TextStyle? dayTextStyle,
     TextStyle? selectedDayTextStyle,
     Color? selectedDayHighlightColor,
+    Color? selectedTodayHighlightColor,
     Color? selectedRangeHighlightColor,
     TextStyle? disabledDayTextStyle,
     TextStyle? todayTextStyle,
+    TextStyle? todaySelectedTextStyle,
+    bool? disableTodayCircle,
     TextStyle? yearTextStyle,
     TextStyle? selectedYearTextStyle,
     TextStyle? selectedRangeDayTextStyle,
@@ -332,13 +363,17 @@ class CalendarDatePicker3WithActionButtonsConfig
           lastMonthIcon: lastMonthIcon,
           nextMonthIcon: nextMonthIcon,
           controlsTextStyle: controlsTextStyle,
+          controlsOpenTextStyle: controlsOpenTextStyle,
           dayTextStyle: dayTextStyle,
           selectedDayTextStyle: selectedDayTextStyle,
           selectedRangeDayTextStyle: selectedRangeDayTextStyle,
           selectedDayHighlightColor: selectedDayHighlightColor,
+          selectedTodayHighlightColor: selectedTodayHighlightColor,
           selectedRangeHighlightColor: selectedRangeHighlightColor,
           disabledDayTextStyle: disabledDayTextStyle,
           todayTextStyle: todayTextStyle,
+          todaySelectedTextStyle: todaySelectedTextStyle,
+          disableTodayCircle: disableTodayCircle,
           yearTextStyle: yearTextStyle,
           selectedYearTextStyle: selectedYearTextStyle,
           dayBorderRadius: dayBorderRadius,
@@ -398,13 +433,17 @@ class CalendarDatePicker3WithActionButtonsConfig
     Widget? lastMonthIcon,
     Widget? nextMonthIcon,
     TextStyle? controlsTextStyle,
+    TextStyle? controlsOpenTextStyle,
     TextStyle? dayTextStyle,
     TextStyle? selectedDayTextStyle,
     TextStyle? selectedRangeDayTextStyle,
     Color? selectedDayHighlightColor,
+    Color? selectedTodayHighlightColor,
     Color? selectedRangeHighlightColor,
     TextStyle? disabledDayTextStyle,
     TextStyle? todayTextStyle,
+    TextStyle? todaySelectedTextStyle,
+    bool? disableTodayCircle,
     TextStyle? yearTextStyle,
     TextStyle? selectedYearTextStyle,
     BorderRadius? dayBorderRadius,
@@ -445,16 +484,23 @@ class CalendarDatePicker3WithActionButtonsConfig
       lastMonthIcon: lastMonthIcon ?? this.lastMonthIcon,
       nextMonthIcon: nextMonthIcon ?? this.nextMonthIcon,
       controlsTextStyle: controlsTextStyle ?? this.controlsTextStyle,
+      controlsOpenTextStyle:
+          controlsOpenTextStyle ?? this.controlsOpenTextStyle,
       dayTextStyle: dayTextStyle ?? this.dayTextStyle,
       selectedDayTextStyle: selectedDayTextStyle ?? this.selectedDayTextStyle,
       selectedRangeDayTextStyle:
           selectedRangeDayTextStyle ?? this.selectedRangeDayTextStyle,
       selectedDayHighlightColor:
           selectedDayHighlightColor ?? this.selectedDayHighlightColor,
+      selectedTodayHighlightColor:
+          selectedTodayHighlightColor ?? this.selectedTodayHighlightColor,
       selectedRangeHighlightColor:
           selectedRangeHighlightColor ?? this.selectedRangeHighlightColor,
       disabledDayTextStyle: disabledDayTextStyle ?? this.disabledDayTextStyle,
       todayTextStyle: todayTextStyle ?? this.todayTextStyle,
+      todaySelectedTextStyle:
+          todaySelectedTextStyle ?? this.todaySelectedTextStyle,
+      disableTodayCircle: disableTodayCircle ?? this.disableTodayCircle,
       yearTextStyle: yearTextStyle ?? this.yearTextStyle,
       selectedYearTextStyle:
           selectedYearTextStyle ?? this.selectedYearTextStyle,
